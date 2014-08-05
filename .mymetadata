@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="jees-framework"
+  id="myeclipse.1407125432281"
+  context-root="/jees-framework"
+  j2ee-spec="6.0"
+  archive="jees-framework.war">
+  <attributes>
+    <attribute name="webrootdir" value="src/main/webapp" />
+  </attributes>
+</project-module>
+
