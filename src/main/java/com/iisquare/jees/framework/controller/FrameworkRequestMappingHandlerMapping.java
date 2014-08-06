@@ -14,12 +14,12 @@ import org.springframework.web.servlet.mvc.condition.ProducesRequestCondition;
 import org.springframework.web.servlet.mvc.condition.RequestCondition;
 import org.springframework.web.servlet.mvc.condition.RequestMethodsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import com.iisquare.jees.framework.FrameworkConfiguration;
 import com.iisquare.jees.framework.util.DPUtil;
 
-public class RequestMappingHandlerMapping extends
-		org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping {
+public class FrameworkRequestMappingHandlerMapping extends RequestMappingHandlerMapping {
 
 	private FrameworkConfiguration frameworkConfiguration;
 	private boolean useSuffixPatternMatch = true;

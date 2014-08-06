@@ -11,17 +11,17 @@
     http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 	
 	<context:component-scan base-package="com.iisquare.jees.demo.controller.*"
-			name-generator="com.iisquare.jees.framework.controller.AnnotationBeanNameGenerator" />
+			name-generator="com.iisquare.jees.framework.controller.FrameworkAnnotationBeanNameGenerator" />
 
 	<!-- springMVC注解 -->
-	<bean class="com.iisquare.jees.framework.controller.RequestMappingHandlerMapping">
+	<bean class="com.iisquare.jees.framework.controller.FrameworkRequestMappingHandlerMapping">
 		<property name="frameworkConfiguration" ref="frameworkConfiguration" />
 	</bean>
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" />
 	
 	<!-- 拦截器 -->
 	<mvc:interceptors>
-		<bean class="com.iisquare.jees.framework.controller.HandlerInterceptor" />
+		<bean class="com.iisquare.jees.framework.controller.FrameworkHandlerInterceptor" />
 	</mvc:interceptors>
 	
 	<bean id="viewResolver"

@@ -1,10 +1,12 @@
 package com.iisquare.jees.demo.controller.index;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.iisquare.jees.core.component.CController;
+import com.iisquare.jees.demo.service.TestService;
 
 /**
  * 测试首页
@@ -14,6 +16,9 @@ import com.iisquare.jees.core.component.CController;
 @Controller
 @Scope("prototype")
 public class IndexController extends CController {
+	
+	@Autowired
+	public TestService testService;
 	
 	/* 当默认首页不存在时，该方法被执行 */
 	@RequestMapping(value="/")
