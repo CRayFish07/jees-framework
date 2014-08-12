@@ -3,8 +3,13 @@ package com.iisquare.jees.core.component;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+
 import com.iisquare.jees.framework.controller.ControllerBase;
 
+@Controller
+@Scope("prototype")
 public class CController extends ControllerBase {
 	/**
 	 * 返回JSON信息，可根据需要拓展XML等格式

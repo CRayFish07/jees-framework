@@ -3,7 +3,7 @@ package com.iisquare.jees.framework;
 import java.util.Hashtable;
 import java.util.Map;
 
-public class FrameworkConfiguration {
+public class Configuration {
 	private static Map<String, Object> cache = new Hashtable<String, Object>(0); // 虚拟缓存
 	private String modulePrefix = "com.iisquare.smh.action."; // 模块包前缀
 	private String controllerSuffix = "Controller"; // 控制器名称后缀
@@ -12,6 +12,7 @@ public class FrameworkConfiguration {
 	private String themeName = "default"; // 主题名称，留空为不区分主题
 	private String dateTimeFormat = "yyyy-MM-dd HH:mm:ss"; // 日期格式
 	private String sessionName = "JSESSIONID"; // 服务器环境的SESSIONID
+	private String tablePrefix = "jees_"; // 数据库表前缀
 	
 	public String getModulePrefix() {
 		return modulePrefix;
@@ -69,7 +70,15 @@ public class FrameworkConfiguration {
 		this.sessionName = sessionName;
 	}
 
-	public FrameworkConfiguration() {}
+	public String getTablePrefix() {
+		return tablePrefix;
+	}
+
+	public void setTablePrefix(String tablePrefix) {
+		this.tablePrefix = tablePrefix;
+	}
+
+	public Configuration() {}
 	
 	public static Object get(String key) {
 		return cache.get(key);

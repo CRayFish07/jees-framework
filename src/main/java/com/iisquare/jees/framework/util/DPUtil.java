@@ -583,4 +583,38 @@ public class DPUtil {
 		}
 		return buf.toString().toLowerCase();
 	}
+	
+	/**
+	 * 判断下标是否在数组范围内
+	 */
+	public static boolean isInArray(Object[] objects, int index) {
+		if(null == objects) return false;
+		if(index < 0) return false;
+		return objects.length >= index;
+	}
+	
+	/**
+	 * 安全获取数组中对应下标的值
+	 */
+	public static Object getByIndex(Object[] objects, int index) {
+		if(isInArray(objects, index)) return objects[index];
+		return null;
+	}
+	
+	/**
+	 * 判断下标是否在列表范围内
+	 */
+	public static boolean isInArray(List<?> list, int index) {
+		if(null == list) return false;
+		if(index < 0) return false;
+		return list.size() >= index;
+	}
+	
+	/**
+	 * 安全获取列表中对应下标的值
+	 */
+	public static Object getByIndex(List<?> list, int index) {
+		if(isInArray(list, index)) return list.get(index);
+		return null;
+	}
 }

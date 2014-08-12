@@ -2,7 +2,7 @@ package com.iisquare.jees.framework.view;
 
 import java.util.List;
 
-import com.iisquare.jees.framework.FrameworkConfiguration;
+import com.iisquare.jees.framework.Configuration;
 import com.iisquare.jees.framework.util.DPUtil;
 
 import freemarker.template.TemplateMethodModelEx;
@@ -13,12 +13,11 @@ import freemarker.template.TemplateModelException;
  */
 public class FreemarkerMillisToDateTimeModel implements TemplateMethodModelEx {
 
-	private FrameworkConfiguration frameworkConfiguration;
+	private Configuration configuration;
 	
-	public FreemarkerMillisToDateTimeModel(
-			FrameworkConfiguration frameworkConfiguration) {
+	public FreemarkerMillisToDateTimeModel(Configuration configuration) {
 		super();
-		this.frameworkConfiguration = frameworkConfiguration;
+		this.configuration = configuration;
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -32,7 +31,7 @@ public class FreemarkerMillisToDateTimeModel implements TemplateMethodModelEx {
 		if(list.size() >= 2) {
 			datetimeFormat =  list.get(1).toString();
 		} else {
-			datetimeFormat =  frameworkConfiguration.getDateTimeFormat();
+			datetimeFormat =  configuration.getDateTimeFormat();
 		}
 		return DPUtil.millisToDateTime(millis, datetimeFormat);
 	}

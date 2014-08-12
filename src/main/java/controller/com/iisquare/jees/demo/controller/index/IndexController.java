@@ -66,4 +66,10 @@ public class IndexController extends CController {
 		assign("op", get("op"));
 		return displayJSON();
 	}
+	
+	/* 数据库操作示例 */
+	public String crudAction() throws Exception {
+		assign("test", testService.getById(1));
+		return displayJSON();
+	}
 }

@@ -15,7 +15,7 @@
 
 	<!-- springMVC注解 -->
 	<bean class="com.iisquare.jees.framework.controller.FrameworkRequestMappingHandlerMapping">
-		<property name="frameworkConfiguration" ref="frameworkConfiguration" />
+		<property name="configuration" ref="configuration" />
 	</bean>
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" />
 	
@@ -58,6 +58,6 @@
 	<!-- 拓展FreeMarker模板 -->
 	<bean class="com.iisquare.jees.framework.view.FreemarkerTemplateManager">
 		<property name="freeMarkerConfigurer" ref="freeMarkerConfigurer" />
-		<property name="frameworkConfiguration" ref="frameworkConfiguration" />
+		<property name="configuration" ref="configuration" />
 	</bean>
 </beans>

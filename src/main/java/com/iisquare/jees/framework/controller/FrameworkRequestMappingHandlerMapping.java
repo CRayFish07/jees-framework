@@ -16,23 +16,22 @@ import org.springframework.web.servlet.mvc.condition.RequestMethodsRequestCondit
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import com.iisquare.jees.framework.FrameworkConfiguration;
+import com.iisquare.jees.framework.Configuration;
 import com.iisquare.jees.framework.util.DPUtil;
 
 public class FrameworkRequestMappingHandlerMapping extends RequestMappingHandlerMapping {
 
-	private FrameworkConfiguration frameworkConfiguration;
+	private Configuration configuration;
 	private boolean useSuffixPatternMatch = true;
 	private boolean useTrailingSlashMatch = true;
 	private final List<String> fileExtensions = new ArrayList<String>();
 
-	public FrameworkConfiguration getFrameworkConfiguration() {
-		return frameworkConfiguration;
+	public Configuration getConfiguration() {
+		return configuration;
 	}
 
-	public void setFrameworkConfiguration(
-			FrameworkConfiguration frameworkConfiguration) {
-		this.frameworkConfiguration = frameworkConfiguration;
+	public void setConfiguration(Configuration configuration) {
+		this.configuration = configuration;
 	}
 
 	@Override
@@ -47,18 +46,18 @@ public class FrameworkRequestMappingHandlerMapping extends RequestMappingHandler
 			/* 约定前提判定 */
 			if(null == scope // 确保对象为多实例模式
 					|| !ConfigurableBeanFactory.SCOPE_PROTOTYPE.equals(scope.value())) return null;
-			if(!classFullName.startsWith(frameworkConfiguration.getModulePrefix())) return null;
-			if(!classFullName.endsWith(frameworkConfiguration.getControllerSuffix())) return null;
-			if(!actionName.endsWith(frameworkConfiguration.getActionSuffix())) return null;
+			if(!classFullName.startsWith(configuration.getModulePrefix())) return null;
+			if(!classFullName.endsWith(configuration.getControllerSuffix())) return null;
+			if(!actionName.endsWith(configuration.getActionSuffix())) return null;
 			/* 提取Module名称 */
 			String moduleName = classFullName.substring(0, classFullName.lastIndexOf("."));
-			moduleName = moduleName.substring(frameworkConfiguration.getModulePrefix().length());
+			moduleName = moduleName.substring(configuration.getModulePrefix().length());
 			/* 提取Controller名称 */
 			String controllerName = classFullName.substring(classFullName.lastIndexOf(".") + 1);
-			controllerName = controllerName.substring(0, controllerName.lastIndexOf(frameworkConfiguration.getControllerSuffix()));
+			controllerName = controllerName.substring(0, controllerName.lastIndexOf(configuration.getControllerSuffix()));
 			controllerName = DPUtil.lowerCaseFirst(controllerName);
 			/* 提取Action名称 */
-			actionName = actionName.substring(0, actionName.lastIndexOf(frameworkConfiguration.getActionSuffix()));
+			actionName = actionName.substring(0, actionName.lastIndexOf(configuration.getActionSuffix()));
 			/* 组合Pattern路径 */
 			StringBuilder pb = new StringBuilder();
 			if(0 < moduleName.length()) {

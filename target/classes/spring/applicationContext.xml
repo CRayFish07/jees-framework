@@ -46,8 +46,12 @@
 		<property name="breakAfterAcquireFailure" value="true" />
 		<property name="testConnectionOnCheckout" value="false" />
 	</bean>
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSource" />
+	</bean>
 
-	<bean id="frameworkConfiguration" class="com.iisquare.jees.framework.FrameworkConfiguration">
+	<bean id="configuration" class="com.iisquare.jees.framework.Configuration">
 		<property name="modulePrefix" value="com.iisquare.jees.demo.controller." />
 		<property name="skinFolder" value="skin" />
 		<property name="themeName" value="${config.theme_name}" />

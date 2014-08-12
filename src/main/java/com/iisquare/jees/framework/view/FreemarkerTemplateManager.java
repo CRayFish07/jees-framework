@@ -2,36 +2,31 @@ package com.iisquare.jees.framework.view;
 
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
-import com.iisquare.jees.framework.FrameworkConfiguration;
-
-import freemarker.template.Configuration;
+import com.iisquare.jees.framework.Configuration;
 
 /**
  * FreeMarker自定义函数管理器
  */
 public class FreemarkerTemplateManager {
 	
-	private FrameworkConfiguration frameworkConfiguration;
-
-	public FrameworkConfiguration getFrameworkConfiguration() {
-		return frameworkConfiguration;
-	}
-
-	public void setFrameworkConfiguration(
-			FrameworkConfiguration frameworkConfiguration) {
-		this.frameworkConfiguration = frameworkConfiguration;
-	}
+	private Configuration configuration;
 	
+	public Configuration getConfiguration() {
+		return configuration;
+	}
+
+	public void setConfiguration(Configuration configuration) {
+		this.configuration = configuration;
+	}
+
 	public void setFreeMarkerConfigurer(FreeMarkerConfigurer freeMarkerConfigurer) {
-		Configuration configuration = freeMarkerConfigurer.getConfiguration();
-        configuration.setSharedVariable("millisToDateTime",
-        		new FreemarkerMillisToDateTimeModel(frameworkConfiguration));
-        configuration.setSharedVariable("empty", new FreemarkerEmptyModel());
-        configuration.setSharedVariable("escapeHtml", new FreemarkerEscapeHtmlModel());
-        configuration.setSharedVariable("unescapeHtml", new FreemarkerUnescapeHtmlModel());
+		freemarker.template.Configuration fmConfiguration = freeMarkerConfigurer.getConfiguration();
+		fmConfiguration.setSharedVariable("millisToDateTime",
+        		new FreemarkerMillisToDateTimeModel(this.configuration));
+		fmConfiguration.setSharedVariable("empty", new FreemarkerEmptyModel());
+		fmConfiguration.setSharedVariable("escapeHtml", new FreemarkerEscapeHtmlModel());
+		fmConfiguration.setSharedVariable("unescapeHtml", new FreemarkerUnescapeHtmlModel());
 	}
 	
-	public FreemarkerTemplateManager() {
-		
-	}
+	public FreemarkerTemplateManager() {}
 }

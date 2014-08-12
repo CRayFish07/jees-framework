@@ -12,13 +12,17 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.iisquare.jees.framework.FrameworkConfiguration;
+import com.iisquare.jees.framework.Configuration;
 import com.iisquare.jees.framework.util.DPUtil;
 import com.iisquare.jees.framework.util.ServletUtil;
 
+@Controller
+@Scope("prototype")
 public abstract class ControllerBase {
 	
 	public static class ResultType {
@@ -30,7 +34,7 @@ public abstract class ControllerBase {
 	}
 	
 	@Autowired
-	private FrameworkConfiguration frameworkConfiguration;
+	private Configuration configuration;
 	private static String CONTENT_TYPE = "text/html;charset=utf-8";
 	
 	public ControllerBase _BASE_;
@@ -40,13 +44,12 @@ public abstract class ControllerBase {
 	public Map<String, Object> _ASSIGN_;
 	public String _WEB_ROOT_, _WEB_URL_, _SKIN_URL_, _THEME_URL_, _DIRECTORY_SEPARATOR_;
 
-	public FrameworkConfiguration getFrameworkConfiguration() {
-		return frameworkConfiguration;
+	public Configuration getConfiguration() {
+		return configuration;
 	}
 
-	public void setFrameworkConfiguration(
-			FrameworkConfiguration frameworkConfiguration) {
-		this.frameworkConfiguration = frameworkConfiguration;
+	public void setConfiguration(Configuration configuration) {
+		this.configuration = configuration;
 	}
 
 	public ControllerBase() {}
@@ -61,18 +64,18 @@ public abstract class ControllerBase {
 		_ASSIGN_ = new HashMap<String, Object>(0);
 		_WEB_ROOT_ = ServletUtil.getWebRoot(request);
 		_WEB_URL_ = ServletUtil.getWebUrl(request);
-		if(DPUtil.empty(frameworkConfiguration.getSkinFolder())) {
+		if(DPUtil.empty(configuration.getSkinFolder())) {
 			_SKIN_URL_ = _WEB_URL_;
 		} else {
 			StringBuilder sb = new StringBuilder(_WEB_URL_);
-			sb.append("/").append(frameworkConfiguration.getSkinFolder());
+			sb.append("/").append(configuration.getSkinFolder());
 			_SKIN_URL_ = sb.toString();
 		}
-		if(DPUtil.empty(frameworkConfiguration.getThemeName())) {
+		if(DPUtil.empty(configuration.getThemeName())) {
 			_THEME_URL_ = _SKIN_URL_;
 		} else {
 			StringBuilder sb = new StringBuilder(_SKIN_URL_);
-			sb.append("/").append(frameworkConfiguration.getThemeName());
+			sb.append("/").append(configuration.getThemeName());
 			_THEME_URL_ = sb.toString();
 		}
 		_DIRECTORY_SEPARATOR_ = ServletUtil.getDirectorySeparator(request);
@@ -81,19 +84,19 @@ public abstract class ControllerBase {
 		String classFullName = this.getClass().getName();
 		String actionName = method.getName();
 		/* 约定前提判定 */
-		if(classFullName.startsWith(frameworkConfiguration.getModulePrefix())
-				&& classFullName.endsWith(frameworkConfiguration.getControllerSuffix())
-				&& actionName.endsWith(frameworkConfiguration.getActionSuffix())) {
+		if(classFullName.startsWith(configuration.getModulePrefix())
+				&& classFullName.endsWith(configuration.getControllerSuffix())
+				&& actionName.endsWith(configuration.getActionSuffix())) {
 			/* 提取Module名称 */
 			String moduleName = classFullName.substring(0, classFullName.lastIndexOf("."));
-			moduleName = moduleName.substring(frameworkConfiguration.getModulePrefix().length());
+			moduleName = moduleName.substring(configuration.getModulePrefix().length());
 			_MODULE_ = moduleName.replaceAll("\\.", "/");
 			/* 提取Controller名称 */
 			String controllerName = classFullName.substring(classFullName.lastIndexOf(".") + 1);
-			controllerName = controllerName.substring(0, controllerName.lastIndexOf(frameworkConfiguration.getControllerSuffix()));
+			controllerName = controllerName.substring(0, controllerName.lastIndexOf(configuration.getControllerSuffix()));
 			_CONTROLLER_ = DPUtil.lowerCaseFirst(controllerName);
 			/* 提取Action名称 */
-			_ACTION_ = actionName.substring(0, actionName.lastIndexOf(frameworkConfiguration.getActionSuffix()));
+			_ACTION_ = actionName.substring(0, actionName.lastIndexOf(configuration.getActionSuffix()));
 		}
 	}
 	
@@ -119,7 +122,7 @@ public abstract class ControllerBase {
 			.addObject("_WEB_URL_", _WEB_URL_)
 			.addObject("_SKIN_URL_", _SKIN_URL_)
 			.addObject("_THEME_URL_", _THEME_URL_)
-			.addObject("_CONFIG_", frameworkConfiguration)
+			.addObject("_CONFIG_", configuration)
 			.addObject("_DIRECTORY_SEPARATOR_", _DIRECTORY_SEPARATOR_)
 			.addAllObjects(_ASSIGN_);
 		}
@@ -280,9 +283,9 @@ public abstract class ControllerBase {
 	 */
 	protected String display(String result, String type) throws Exception {
 		if(ResultType._FREEMARKER_.equals(type)) {
-			if(!DPUtil.empty(frameworkConfiguration.getThemeName())) {
+			if(!DPUtil.empty(configuration.getThemeName())) {
 				StringBuilder sb = new StringBuilder("/");
-				sb.append(frameworkConfiguration.getThemeName()).append(result);
+				sb.append(configuration.getThemeName()).append(result);
 				return sb.toString();
 			}
 			return result;
