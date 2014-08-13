@@ -1,20 +1,17 @@
 package com.iisquare.jees.framework.model;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.iisquare.jees.framework.Configuration;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 @Repository
 @Scope("prototype")
 public abstract class DaoBase<T> extends JdbcTemplate {
 	private Class<T> entityClass;
-	@Autowired
-	private DataSource dataSource;
 	@Autowired
 	protected Configuration configuration;
 	protected String tableName = "";
@@ -28,12 +25,9 @@ public abstract class DaoBase<T> extends JdbcTemplate {
 		this.entityClass = entityClass;
 	}
 
-	public DataSource getDataSource() {
-		return dataSource;
-	}
-
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
+	@Autowired
+	public void setDataSource(ComboPooledDataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
 	public Configuration getConfiguration() {
@@ -65,6 +59,7 @@ public abstract class DaoBase<T> extends JdbcTemplate {
 	}
 	
 	public T getById(int value) {
-		return null;
+		String sql = "select * from jees_test where id = ?";
+		return queryForObject(sql, new Object[]{value}, entityClass);
 	}
 }
