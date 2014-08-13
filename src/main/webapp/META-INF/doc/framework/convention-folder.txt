@@ -10,7 +10,7 @@ com.iisquare.jees.framework.util 工具类
 src/main/resources 项目配置文件
 
 src/test/java 测试代码
-src/test/resources 测试配置文件
+src/test/resources 测试配置文件,文件统一添加*.test.*后缀
 
 src/main/java/core 核心类
 com.iisquare.jees.core.component 核心组件

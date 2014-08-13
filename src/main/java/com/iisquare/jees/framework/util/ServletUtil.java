@@ -55,9 +55,9 @@ public class ServletUtil {
 	public static Map<String, Object> getSession(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Map<String, Object> map = new HashMap<String, Object>();
-		Enumeration<String> e = session.getAttributeNames();
+		Enumeration<?> e = session.getAttributeNames();
 		while(e.hasMoreElements()) {
-			String key = (String)e.nextElement();
+			String key = (String) e.nextElement();
 			map.put(key, session.getAttribute(key));
 		}
 		return map;
@@ -91,7 +91,7 @@ public class ServletUtil {
 	}
 	
 	public static String getWebRoot(HttpServletRequest request) {
-		String webRoot = request.getServletContext().getRealPath("/");
+		String webRoot = request.getSession().getServletContext().getRealPath("/");
 		return webRoot.substring(0, webRoot.length() - 1);
 	}
 	

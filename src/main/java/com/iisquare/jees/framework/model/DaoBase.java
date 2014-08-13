@@ -1,16 +1,20 @@
 package com.iisquare.jees.framework.model;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.iisquare.jees.framework.Configuration;
 
 @Repository
-public abstract class DaoBase<T> {
+@Scope("prototype")
+public abstract class DaoBase<T> extends JdbcTemplate {
 	private Class<T> entityClass;
 	@Autowired
-	protected JdbcTemplate jdbcTemplate;
+	private DataSource dataSource;
 	@Autowired
 	protected Configuration configuration;
 	protected String tableName = "";
@@ -24,12 +28,12 @@ public abstract class DaoBase<T> {
 		this.entityClass = entityClass;
 	}
 
-	public JdbcTemplate getJdbcTemplate() {
-		return jdbcTemplate;
+	public DataSource getDataSource() {
+		return dataSource;
 	}
 
-	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
 	}
 
 	public Configuration getConfiguration() {
