@@ -24,6 +24,7 @@ public abstract class DaoBase<T> extends JdbcTemplate {
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
 	@Autowired
+	@Override
 	public void setDataSource(DataSource dataSource) {
 		super.setDataSource(dataSource);
 	}

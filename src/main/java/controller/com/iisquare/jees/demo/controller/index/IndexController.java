@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.iisquare.jees.core.component.CController;
@@ -14,6 +16,8 @@ import com.iisquare.jees.demo.service.TestService;
  * @author Ouyang <iisquare@163.com>
  *
  */
+@Controller
+@Scope("prototype")
 public class IndexController extends CController {
 	
 	@Autowired
