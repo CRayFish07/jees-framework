@@ -81,6 +81,26 @@ public class SqlUtil {
 		return sb.toString();
 	}
 	
+	public static String buildInsert(String tableName, Object[] keys) {
+		StringBuilder sbFileds = new StringBuilder();
+		StringBuilder sbValues = new StringBuilder();
+		for(int i = 0; i < keys.length; i++) {
+			if(i > 0) {
+				sbFileds.append(", ");
+				sbValues.append(", ");
+			}
+			sbFileds.append(keys[i]);
+			sbValues.append(":").append(keys[i]);
+		}
+		StringBuilder sb = new StringBuilder("insert into ").append(tableName).append(" (")
+				.append(sbFileds.toString()).append(") values (").append(sbValues.toString()).append(")");
+		return sb.toString();
+	}
+	
+	public static String buildInsert(String tableName, Map<String, Object> values) {
+		return buildInsert(tableName, values.keySet().toArray());
+	}
+	
 	public static String buildUpdate(String tableName, Object[] keys, String where) {
 		StringBuilder sb = new StringBuilder("update ").append(tableName).append(" set ");
 		for(int i = 0; i < keys.length; i++) {

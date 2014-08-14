@@ -63,9 +63,23 @@ public class IndexController extends CController {
 		return displayJSON();
 	}
 	
-	/* 数据库操作示例 */
-	public String crudAction() throws Exception {
-		assign("test", testService.getById(1));
+	/* 数据库操作示例 - 添加 */
+	public String modelCAction() throws Exception {
+		return displayJSON();
+	}
+	
+	/* 数据库操作示例 - 修改 */
+	public String modelUAction() throws Exception {
+		return displayJSON();
+	}
+	
+	/* 数据库操作示例 - 读取 */
+	public String modelRAction() throws Exception {
+		return displayJSON();
+	}
+	
+	/* 数据库操作示例 - 删除 */
+	public String modelDAction() throws Exception {
 		return displayJSON();
 	}
 }
