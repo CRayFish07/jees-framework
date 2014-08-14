@@ -13,6 +13,10 @@ public class TestService extends ServiceBase {
 	
 	public TestService() {}
 	
+	public int insert(Map<String, Object> values) {
+		return testDao.insert(values);
+	}
+	
 	public Map<String, Object> getById(int id) {
 		return testDao.getById(id);
 	}

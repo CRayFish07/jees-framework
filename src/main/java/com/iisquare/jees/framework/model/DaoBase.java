@@ -2,14 +2,17 @@ package com.iisquare.jees.framework.model;
 
 import java.util.Map;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.iisquare.jees.framework.Configuration;
 import com.iisquare.jees.framework.util.DPUtil;
-import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.iisquare.jees.framework.util.SqlUtil;
 
 @Repository
 @Scope("prototype")
@@ -18,9 +21,10 @@ public abstract class DaoBase<T> extends JdbcTemplate {
 	@Autowired
 	protected Configuration configuration;
 	protected String primaryKey = "id";
+	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
 	@Autowired
-	public void setDataSource(ComboPooledDataSource dataSource) {
+	public void setDataSource(DataSource dataSource) {
 		super.setDataSource(dataSource);
 	}
 
@@ -52,13 +56,25 @@ public abstract class DaoBase<T> extends JdbcTemplate {
 		this.entityClass = clazz;
 	}
 	
+	/**
+	 * 获取对应的数据库表名称
+	 */
 	public String tableName() {
 		return configuration.getTablePrefix() + DPUtil.addUnderscores(entityClass.getSimpleName());
 	}
 	
+	/**
+	 * 获取NamedParameterJdbcTemplate操作对象
+	 */
+	public NamedParameterJdbcTemplate npJdbcTemplate() {
+		if(null == namedParameterJdbcTemplate) {
+			namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(this);
+		}
+		return namedParameterJdbcTemplate;
+	}
+	
 	public int insert(Map<String, Object> values) {
-		
-		return 0;
+		return npJdbcTemplate().update(SqlUtil.buildInsert(tableName(), values), values);
 	}
 	
 	public void bantchInsert() {
