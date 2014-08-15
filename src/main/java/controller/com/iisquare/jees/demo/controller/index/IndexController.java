@@ -1,14 +1,12 @@
 package com.iisquare.jees.demo.controller.index;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.iisquare.jees.core.component.CController;
+import com.iisquare.jees.demo.domain.Test;
 import com.iisquare.jees.demo.service.TestService;
 
 /**
@@ -73,15 +71,15 @@ public class IndexController extends CController {
 	/* 数据库操作示例 - 添加 */
 	public String modelCAction() throws Exception {
 		long time = System.currentTimeMillis();
-		Map<String, Object> values = new HashMap<String, Object>(7);
-		values.put("title", "标题" + time);
-		values.put("content", "内容");
-		values.put("status", 0);
-		values.put("time_create", time);
-		values.put("time_update", time);
-		int id = testService.insert(values);
-		assign("newTestId", id);
-		assign("object", values);
+		Test test = new Test();
+		test.setTitle("标题" + time);
+		test.setContent("内容");
+		test.setStatus(0);
+		test.setTimeCreate(time);
+		test.setTimeUpdate(time);
+		int id = testService.insert(test);
+		assign("newId", id);
+		assign("object", test);
 		return displayJSON();
 	}
 	

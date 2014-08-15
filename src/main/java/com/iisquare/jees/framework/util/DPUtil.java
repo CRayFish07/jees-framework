@@ -1,12 +1,15 @@
 package com.iisquare.jees.framework.util;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -64,8 +67,6 @@ public class DPUtil {
 						.toUpperCase().substring(1, 3));
 			}
 			return sb.toString();
-		} catch (RuntimeException e) {
-			return null;
 		} catch (Exception e) {
 			return null;
 		}
@@ -616,5 +617,29 @@ public class DPUtil {
 	public static Object getByIndex(List<?> list, int index) {
 		if(isInArray(list, index)) return list.get(index);
 		return null;
+	}
+	
+	/**
+	 * 将实体对象转化为Map
+	 * @param object 对象实例
+	 */
+	public static Map<String, Object> convertEntityToMap(Object object, boolean bUnderscores) {
+		Class<?> instance = object.getClass();
+		Field[] field = instance.getDeclaredFields();
+		try {
+			int length = field.length;
+			Map<String, Object> map = new HashMap<String, Object>(DPUtil.parseInt(length / 0.75f));
+			for (int i = 0; i < length; i++) {
+				String name = field[i].getName();
+				name = name.substring(0, 1).toUpperCase() + name.substring(1);
+				Method method = instance.getMethod("get" + name);
+				Object value = method.invoke(object);
+				if(bUnderscores) name = addUnderscores(name);
+				map.put(name, value);
+			}
+			return map;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }

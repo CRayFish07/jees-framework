@@ -87,6 +87,15 @@ public abstract class DaoBase<T> extends JdbcTemplate {
 		return result > 0 ? keyHolder.getKey().intValue() : result;
 	}
 	
+	/**
+	 * 添加记录，返回自增长ID
+	 */
+	public int insert(T object) {
+		Map<String, Object> values = DPUtil.convertEntityToMap(object, true);
+		if(null == values) return 0;
+		return insert(values);
+	}
+	
 	public void bantchInsert() {
 		
 	}
