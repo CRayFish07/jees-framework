@@ -7,7 +7,10 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.iisquare.jees.framework.Configuration;
@@ -74,8 +77,14 @@ public abstract class DaoBase<T> extends JdbcTemplate {
 		return namedParameterJdbcTemplate;
 	}
 	
+	/**
+	 * 添加记录，返回自增长ID
+	 */
 	public int insert(Map<String, Object> values) {
-		return npJdbcTemplate().update(SqlUtil.buildInsert(tableName(), values), values);
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		int result = npJdbcTemplate().update(SqlUtil.buildInsert(tableName(), values)
+				, new MapSqlParameterSource(values), keyHolder);
+		return result > 0 ? keyHolder.getKey().intValue() : result;
 	}
 	
 	public void bantchInsert() {
