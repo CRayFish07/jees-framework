@@ -1,7 +1,5 @@
 package com.iisquare.jees.demo.service;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +19,11 @@ public class TestService extends ServiceBase {
 		return testDao.insert(test);
 	}
 	
-	public Map<String, Object> getById(int id) {
+	public int update(Test test) {
+		return testDao.update(test);
+	}
+	
+	public Test getById(Integer id) {
 		return testDao.getById(id);
 	}
 }

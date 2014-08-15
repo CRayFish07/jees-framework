@@ -1,5 +1,6 @@
 package com.iisquare.jees.framework.model;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -96,23 +97,85 @@ public abstract class DaoBase<T> extends JdbcTemplate {
 		return insert(values);
 	}
 	
-	public void bantchInsert() {
-		
+	/**
+	 * 更新记录，返回影响行数
+	 */
+	public int update(T object) {
+		if(null == object) return 0;
+		Map<String, Object> values = DPUtil.convertEntityToMap(object, true);
+		return updateByIds(values, values.get(primaryKey));
 	}
 	
+	/**
+	 * 更新记录，返回影响行数
+	 */
 	public int update(Map<String, Object> values, String where) {
-		return 0;
+		String sql = SqlUtil.buildUpdate(tableName(), values, where);
+		return npJdbcTemplate().update(sql, values);
 	}
 	
-	public void batchUpdate() {
-		
+	/**
+	 * 更新记录，返回影响行数
+	 */
+	public int update(Map<String, Object> values, Map<String, Object> where, Map<String, String> operators) {
+		String sql = SqlUtil.buildUpdate(tableName(), values, SqlUtil.buildWhere(where, operators));
+		return npJdbcTemplate().update(sql, values);
 	}
 	
+	/**
+	 * 根据ID更新记录，返回影响行数
+	 */
+	public int updateByIds(Map<String, Object> values, Object... ids) {
+		if(DPUtil.empty(ids)) return 0;
+		StringBuilder where = new StringBuilder();
+		where.append(primaryKey).append(" in (").append(DPUtil.makeIds(ids)).append(")");
+		String sql = SqlUtil.buildUpdate(tableName(), values, where.toString());
+		return npJdbcTemplate().update(sql, values);
+	}
+	
+	/**
+	 * 删除记录，返回影响行数
+	 */
+	public int delete(T object) {
+		if(null == object) return 0;
+		Map<String, Object> values = DPUtil.convertEntityToMap(object, true);
+		return deleteByIds(values.get(primaryKey));
+	}
+	
+	/**
+	 * 删除记录，返回影响行数
+	 */
 	public int delete(String where) {
-		return 0;
+		String sql = SqlUtil.buildDelete(tableName(), where);
+		return npJdbcTemplate().update(sql, new HashMap<String, Object>());
 	}
 	
-	public Map<String, Object> getById(int id) {
-		return null;
+	/**
+	 * 删除记录，返回影响行数
+	 */
+	public int delete(Map<String, Object> where, Map<String, String> operators) {
+		String sql = SqlUtil.buildDelete(tableName(), SqlUtil.buildWhere(where, operators));
+		return npJdbcTemplate().update(sql, where);
+	}
+	
+	/**
+	 * 根据ID删除记录，返回影响行数
+	 */
+	public int deleteByIds(Object... ids) {
+		if(DPUtil.empty(ids)) return 0;
+		StringBuilder where = new StringBuilder();
+		where.append(primaryKey).append(" in (").append(DPUtil.makeIds(ids)).append(")");
+		String sql = SqlUtil.buildDelete(tableName(), where.toString());
+		return npJdbcTemplate().update(sql, new HashMap<String, Object>());
+	}
+	
+	/**
+	 * 更具ID获取对象
+	 */
+	public T getById(int id) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("select * from ").append(tableName()).append(" where ")
+				.append(primaryKey).append(" = ? limit 1");
+		return queryForObject(sb.toString(), new Object[]{id}, entityClass);
 	}
 }

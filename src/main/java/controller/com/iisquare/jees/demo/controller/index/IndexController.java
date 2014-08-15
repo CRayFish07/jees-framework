@@ -78,13 +78,24 @@ public class IndexController extends CController {
 		test.setTimeCreate(time);
 		test.setTimeUpdate(time);
 		int id = testService.insert(test);
-		assign("newId", id);
+		assign("insertId", id);
 		assign("object", test);
 		return displayJSON();
 	}
 	
 	/* 数据库操作示例 - 修改 */
 	public String modelUAction() throws Exception {
+		long time = System.currentTimeMillis();
+		int id = I(get("id"));
+		Test test = testService.getById(id);
+		if(null == test) {
+			return displayMessage(500, "对象不存在");
+		}
+		test.setContent("内容" + time);
+		test.setTimeUpdate(time);
+		int result = testService.update(test);
+		assign("result", result);
+		assign("object", test);
 		return displayJSON();
 	}
 	

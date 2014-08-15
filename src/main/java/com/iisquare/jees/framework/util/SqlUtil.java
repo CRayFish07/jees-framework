@@ -51,11 +51,18 @@ public class SqlUtil {
 		return sb.toString();
 	}
 	
-	public static String buildWhere(Map<String, Object> values, Map<String, String> operators) {
+	public static String buildWhere(Map<String, Object> where, Map<String, String> operators) {
 		if(DPUtil.empty(operators)) {
-			return buildWhere(values.keySet().toArray(), null);
+			return buildWhere(where.keySet().toArray(), null);
 		} else {
-			return buildWhere(values.keySet().toArray(), operators.keySet().toArray());
+			/* Map内部元素顺序随机 */
+			String[] keys = (String[]) where.keySet().toArray();
+			int length = keys.length;
+			String[] values = new String[length];
+			for(int i = 0; i < length; i++) {
+				values[i] = operators.get(keys[i]);
+			}
+			return buildWhere(keys, values);
 		}
 	}
 	
