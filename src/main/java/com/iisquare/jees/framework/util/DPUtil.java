@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -159,6 +160,19 @@ public class DPUtil {
 		return Double.parseDouble(str);
 	}
 	
+	/**
+	 * 转换为float类型
+	 * @param object
+	 * @return
+	 */
+	public static float parseFloat(Object object) {
+		if(null == object) return 0.0f;
+		String str = object.toString();
+		if("".equals(str)) return 0.0f;
+		str = getFirstMatcher(regexDouble, str);
+		return Float.parseFloat(str);
+	}
+	
 	public static List<String> getMatcher(String regex, String str) {
 		return getMatcher(regex, str, true);
 	}
@@ -275,7 +289,7 @@ public class DPUtil {
 				}
 			}
 		}
-		return DPUtil.listToStringArray(list);
+		return DPUtil.collectionToStringArray(list);
 	}
 	
 	/**
@@ -292,7 +306,7 @@ public class DPUtil {
 		for (String str : string.split(splitRegex)) {
 			list.add(str);
 		}
-		return DPUtil.listToStringArray(list);
+		return DPUtil.collectionToStringArray(list);
 	}
 	
 	/**
@@ -310,7 +324,7 @@ public class DPUtil {
 	 * @param list
 	 * @return
 	 */
-	public static String[] listToStringArray(List<String> list) {
+	public static String[] collectionToStringArray(Collection<String> list) {
 		if(null == list) {
 			String[] stringArray = {};
 			return stringArray;

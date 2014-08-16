@@ -23,6 +23,10 @@ public class TestService extends ServiceBase {
 		return testDao.update(test);
 	}
 	
+	public int deleteByIds(Object... ids) {
+		return testDao.deleteByIds(ids);
+	}
+	
 	public Test getById(Integer id) {
 		return testDao.getById(id);
 	}

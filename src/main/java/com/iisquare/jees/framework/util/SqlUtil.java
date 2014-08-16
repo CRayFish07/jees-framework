@@ -56,7 +56,7 @@ public class SqlUtil {
 			return buildWhere(where.keySet().toArray(), null);
 		} else {
 			/* Map内部元素顺序随机 */
-			String[] keys = (String[]) where.keySet().toArray();
+			String[] keys = DPUtil.collectionToStringArray(where.keySet());
 			int length = keys.length;
 			String[] values = new String[length];
 			for(int i = 0; i < length; i++) {

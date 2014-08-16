@@ -1,13 +1,18 @@
 package com.iisquare.jees.framework.model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.RowMapperResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -61,6 +66,36 @@ public abstract class DaoBase<T> extends JdbcTemplate {
 		this.entityClass = clazz;
 	}
 	
+	@SuppressWarnings("hiding")
+	@Override
+	public <T> T queryForObject(String sql, RowMapper<T> rowMapper) throws DataAccessException {
+		List<T> results = query(sql, rowMapper);
+		return FrameworkDataAccessUtils.requiredSingleResult(results);
+	}
+	
+	@SuppressWarnings("hiding")
+	@Override
+	public <T> T queryForObject(String sql, Object[] args, int[] argTypes, RowMapper<T> rowMapper)
+			throws DataAccessException {
+
+		List<T> results = query(sql, args, argTypes, new RowMapperResultSetExtractor<T>(rowMapper, 1));
+		return FrameworkDataAccessUtils.requiredSingleResult(results);
+	}
+	
+	@SuppressWarnings("hiding")
+	@Override
+	public <T> T queryForObject(String sql, Object[] args, RowMapper<T> rowMapper) throws DataAccessException {
+		List<T> results = query(sql, args, new RowMapperResultSetExtractor<T>(rowMapper, 1));
+		return FrameworkDataAccessUtils.requiredSingleResult(results);
+	}
+	
+	@SuppressWarnings("hiding")
+	@Override
+	public <T> T queryForObject(String sql, RowMapper<T> rowMapper, Object... args) throws DataAccessException {
+		List<T> results = query(sql, args, new RowMapperResultSetExtractor<T>(rowMapper, 1));
+		return FrameworkDataAccessUtils.requiredSingleResult(results);
+	}
+	
 	/**
 	 * 获取对应的数据库表名称
 	 */
@@ -73,7 +108,7 @@ public abstract class DaoBase<T> extends JdbcTemplate {
 	 */
 	public NamedParameterJdbcTemplate npJdbcTemplate() {
 		if(null == namedParameterJdbcTemplate) {
-			namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(this);
+			namedParameterJdbcTemplate = new FrameworkNamedParameterJdbcTemplate(this);
 		}
 		return namedParameterJdbcTemplate;
 	}
@@ -176,6 +211,6 @@ public abstract class DaoBase<T> extends JdbcTemplate {
 		StringBuilder sb = new StringBuilder();
 		sb.append("select * from ").append(tableName()).append(" where ")
 				.append(primaryKey).append(" = ? limit 1");
-		return queryForObject(sb.toString(), new Object[]{id}, entityClass);
+		return queryForObject(sb.toString(), new Object[]{id}, new BeanPropertyRowMapper<T>(entityClass));
 	}
 }

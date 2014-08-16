@@ -101,11 +101,19 @@ public class IndexController extends CController {
 	
 	/* 数据库操作示例 - 读取 */
 	public String modelRAction() throws Exception {
+		int id = I(get("id"));
+		Test test = testService.getById(id);
+		assign("selectId", id);
+		assign("result", test);
 		return displayJSON();
 	}
 	
 	/* 数据库操作示例 - 删除 */
 	public String modelDAction() throws Exception {
+		int id = I(get("id"));
+		int result = testService.deleteByIds(id);
+		assign("deleteId", id);
+		assign("result", result);
 		return displayJSON();
 	}
 }
