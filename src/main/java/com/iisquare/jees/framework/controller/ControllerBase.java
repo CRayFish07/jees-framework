@@ -34,8 +34,8 @@ public abstract class ControllerBase {
 	}
 	
 	@Autowired
-	private Configuration configuration;
-	private static String CONTENT_TYPE = "text/html;charset=utf-8";
+	protected Configuration configuration;
+	protected static String CONTENT_TYPE = "text/html;charset=utf-8";
 	
 	public ControllerBase _BASE_;
 	public HttpServletRequest _REQUEST_;

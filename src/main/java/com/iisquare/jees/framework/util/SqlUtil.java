@@ -38,6 +38,7 @@ public class SqlUtil {
 	}
 	
 	public static String buildWhere(Object[] keys, Object[] operators) {
+		if(DPUtil.empty(keys)) return "";
 		if(DPUtil.empty(operators)) {
 			operators = fillOperators(keys.length, "=");
 		}
@@ -52,6 +53,7 @@ public class SqlUtil {
 	}
 	
 	public static String buildWhere(Map<String, Object> where, Map<String, String> operators) {
+		if(DPUtil.empty(where)) return "";
 		if(DPUtil.empty(operators)) {
 			return buildWhere(where.keySet().toArray(), null);
 		} else {

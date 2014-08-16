@@ -1,5 +1,7 @@
 package com.iisquare.jees.demo.controller.index;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -10,7 +12,7 @@ import com.iisquare.jees.demo.domain.Test;
 import com.iisquare.jees.demo.service.TestService;
 
 /**
- * 测试首页
+ * 示例程序
  * @author Ouyang <iisquare@163.com>
  *
  */
@@ -101,10 +103,15 @@ public class IndexController extends CController {
 	
 	/* 数据库操作示例 - 读取 */
 	public String modelRAction() throws Exception {
-		int id = I(get("id"));
-		Test test = testService.getById(id);
-		assign("selectId", id);
-		assign("result", test);
+		int page = I(get("page"));
+		int pageSize = 15;
+		String append = "order by time_update desc";
+		int count = testService.getCount(null, null, append);
+		List<Test> result = testService.getPage(null, null, append, page, pageSize);
+		assign("page", page);
+		assign("pageSize", pageSize);
+		assign("count", count);
+		assign("result", result);
 		return displayJSON();
 	}
 	

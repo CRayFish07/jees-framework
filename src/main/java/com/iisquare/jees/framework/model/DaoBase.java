@@ -205,12 +205,52 @@ public abstract class DaoBase<T> extends JdbcTemplate {
 	}
 	
 	/**
-	 * 更具ID获取对象
+	 * 根据ID获取对象
 	 */
 	public T getById(int id) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("select * from ").append(tableName()).append(" where ")
 				.append(primaryKey).append(" = ? limit 1");
 		return queryForObject(sb.toString(), new Object[]{id}, new BeanPropertyRowMapper<T>(entityClass));
+	}
+	
+	/**
+	 * 根据单个字段获取对象
+	 */
+	public T getByField(String field, String value, String operator, String append) {
+		Map<String, Object> where = new HashMap<String, Object>(2);
+		where.put(field, value);
+		Map<String, String> operators = null;
+		if(!DPUtil.empty(operator)) {
+			operators = new HashMap<String, String>(2);
+			operators.put(field, operator);
+		}
+		return getByFields(where, operators, append);
+	}
+	
+	/**
+	 * 根据多个字段获取对象
+	 */
+	public T getByFields(Map<String, Object> where, Map<String, String> operators, String append) {
+		return getPage(where, operators, append, 1, 1).get(0);
+	}
+	
+	/**
+	 * 获取分页对象
+	 */
+	public List<T> getPage(Map<String, Object> where,
+			Map<String, String> operators, String append, int page, int pageSize) {
+		String sql = SqlUtil.buildSelect(tableName(), "*", SqlUtil.buildWhere(where, operators), append, page, pageSize);
+		return npJdbcTemplate().query(sql, where, new BeanPropertyRowMapper<T>(entityClass));
+	}
+	
+	/**
+	 * 获取查询记录结果条数
+	 */
+	public int getCount(Map<String, Object> where, Map<String, String> operators, String append) {
+		String count = "COUNT(*)";
+		String sql = SqlUtil.buildSelect(tableName(), count, SqlUtil.buildWhere(where, operators), append, 1, 1);
+		Number number = npJdbcTemplate().queryForObject(sql, where, Integer.class);
+		return (number != null ? number.intValue() : 0);
 	}
 }

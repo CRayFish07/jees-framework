@@ -1,5 +1,8 @@
 package com.iisquare.jees.demo.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +32,14 @@ public class TestService extends ServiceBase {
 	
 	public Test getById(Integer id) {
 		return testDao.getById(id);
+	}
+	
+	public int getCount(Map<String, Object> where, Map<String, String> operators, String append) {
+		return testDao.getCount(where, operators, append);
+	}
+	
+	public List<Test> getPage(Map<String, Object> where,
+			Map<String, String> operators, String append, int page, int pageSize) {
+		return testDao.getPage(where, operators, append, page, pageSize);
 	}
 }
