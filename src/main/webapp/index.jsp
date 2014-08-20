@@ -16,7 +16,7 @@ if(location.endsWith("/")) location = location.substring(0, location.length() - 
 <a href="<%=location%>/index/index/redirect" target="_blank">跳转示例 </a><br/>
 <a href="<%=location%>/mapping" target="_blank">springMVC融合示例</a><br/>
 <a href="<%=location%>/index/index/param" target="_blank">全局参数输出示例</a><br/>
-<a href="<%=location%>/index/index/inject?id=123&name=hello&op=other_param" target="_blank">请求参数获取示例</a><br/>
+<a href="<%=location%>/index/index/inject?id=123&title=hello&op=other_param" target="_blank">请求参数获取示例</a><br/>
 <a href="<%=location%>/index/index/modelC" target="_blank">数据库操作示例 - 添加</a><br/>
 <a href="<%=location%>/index/index/modelU?id=1" target="_blank">数据库操作示例 - 修改</a><br/>
 <a href="<%=location%>/index/index/modelR?page=1" target="_blank">数据库操作示例 - 读取</a><br/>

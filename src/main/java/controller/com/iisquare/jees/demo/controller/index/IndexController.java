@@ -65,7 +65,8 @@ public class IndexController extends CController {
 	}
 	
 	/* 请求参数获取示例 */
-	public String injectAction() throws Exception {
+	public String injectAction(Test test) throws Exception {
+		assign("test", test);
 		assign("op", get("op"));
 		return displayJSON();
 	}
