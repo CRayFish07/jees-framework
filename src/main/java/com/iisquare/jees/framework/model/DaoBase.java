@@ -232,7 +232,9 @@ public abstract class DaoBase<T> extends JdbcTemplate {
 	 * 根据多个字段获取对象
 	 */
 	public T getByFields(Map<String, Object> where, Map<String, String> operators, String append) {
-		return getPage(where, operators, append, 1, 1).get(0);
+		 List<T> list = getPage(where, operators, append, 1, 1);
+		 if(list.size() < 1) return null;
+		return list.get(0);
 	}
 	
 	/**
