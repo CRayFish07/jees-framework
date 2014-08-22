@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.iisquare.jees.core.component.CController;
 import com.iisquare.jees.demo.domain.Test;
 import com.iisquare.jees.demo.service.TestService;
+import com.iisquare.jees.framework.util.DPUtil;
 
 /**
  * 示例程序
@@ -89,7 +90,7 @@ public class IndexController extends CController {
 	/* 数据库操作示例 - 修改 */
 	public String modelUAction() throws Exception {
 		long time = System.currentTimeMillis();
-		int id = I(get("id"));
+		int id = DPUtil.parseInt(get("id"));
 		Test test = testService.getById(id);
 		if(null == test) {
 			return displayMessage(500, "对象不存在");
@@ -104,7 +105,7 @@ public class IndexController extends CController {
 	
 	/* 数据库操作示例 - 读取 */
 	public String modelRAction() throws Exception {
-		int page = I(get("page"));
+		int page = DPUtil.parseInt(get("page"));
 		int pageSize = 15;
 		String append = "order by time_update desc";
 		int count = testService.getCount(null, null, append);
@@ -118,7 +119,7 @@ public class IndexController extends CController {
 	
 	/* 数据库操作示例 - 删除 */
 	public String modelDAction() throws Exception {
-		int id = I(get("id"));
+		int id = DPUtil.parseInt(get("id"));
 		int result = testService.deleteByIds(id);
 		assign("deleteId", id);
 		assign("result", result);
