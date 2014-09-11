@@ -341,17 +341,21 @@ public class DPUtil {
 	
 	/**
 	 * 将ArrayList转换为String数组
-	 * @param list
-	 * @return
 	 */
 	public static String[] collectionToStringArray(Collection<String> list) {
+		return (String[]) collectionToArray(list);
+	}
+	
+	/**
+	 * 将ArrayList转换为Object数组
+	 */
+	public static Object[] collectionToArray(Collection<String> list) {
 		if(null == list) {
-			String[] stringArray = {};
-			return stringArray;
+			return new Object[]{};
 		}
-		String[] stringArray = new String[list.size()];
-		list.toArray(stringArray);
-		return stringArray;
+		Object[] objectArray = new Object[list.size()];
+		list.toArray(objectArray);
+		return objectArray;
 	}
 	
 	/**
