@@ -682,7 +682,7 @@ public class DPUtil {
 	}
 	
 	public static List<Map<String, Object>> formatRelation(List<Map<String, Object>> list, Object root) {
-		return formatRelation(list, "id", "parent", "children", root);
+		return formatRelation(list, "id", "parent_id", "children", root);
 	}
 	
 	/**
@@ -692,11 +692,13 @@ public class DPUtil {
 			String primaryKey, String parentKey, String childrenKey, Object root) {
 		Map<Object, List<Map<String, Object>>> parentMap = new HashMap<Object, List<Map<String, Object>>>();
 		for (Map<String, Object> item : list) {
-			List<Map<String, Object>> listSub = parentMap.get(item.get(parentKey));
+			Object parentValue = item.get(parentKey);
+			List<Map<String, Object>> listSub = parentMap.get(parentValue);
 			if(null == listSub) {
 				listSub = new ArrayList<Map<String, Object>>();
 			}
 			listSub.add(item);
+			parentMap.put(parentValue, listSub);
 		}
 		return processFormatRelation(parentMap, primaryKey, childrenKey, root);
 	}

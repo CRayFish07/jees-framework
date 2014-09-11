@@ -79,8 +79,8 @@ public class IndexController extends CController {
 		test.setTitle("标题" + time);
 		test.setContent("内容");
 		test.setStatus(0);
-		test.setTimeCreate(time);
-		test.setTimeUpdate(time);
+		test.setCreateTime(time);
+		test.setUpdateTime(time);
 		int id = testService.insert(test);
 		assign("insertId", id);
 		assign("object", test);
@@ -96,7 +96,7 @@ public class IndexController extends CController {
 			return displayMessage(500, "对象不存在");
 		}
 		test.setContent("内容" + time);
-		test.setTimeUpdate(time);
+		test.setUpdateTime(time);
 		int result = testService.update(test);
 		assign("result", result);
 		assign("object", test);
@@ -107,7 +107,7 @@ public class IndexController extends CController {
 	public String modelRAction() throws Exception {
 		int page = DPUtil.parseInt(get("page"));
 		int pageSize = 15;
-		String append = "order by time_update desc";
+		String append = "order by update_time desc";
 		int count = testService.getCount(null, null, append);
 		List<Test> result = testService.getPage(null, null, append, page, pageSize);
 		assign("page", page);

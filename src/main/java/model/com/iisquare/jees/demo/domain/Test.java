@@ -5,9 +5,9 @@ public class Test {
 	private String title; // 标题
 	private String content; // 内容
 	private Integer status; // 状态
-	private Long timeCreate; // 添加时间
-	private Long timeUpdate; // 修改时间
-	
+	private Long createTime; // 添加时间
+	private Long updateTime; // 修改时间
+
 	public Integer getId() {
 		return id;
 	}
@@ -40,20 +40,20 @@ public class Test {
 		this.status = status;
 	}
 
-	public Long getTimeCreate() {
-		return timeCreate;
+	public Long getCreateTime() {
+		return createTime;
 	}
 
-	public void setTimeCreate(Long timeCreate) {
-		this.timeCreate = timeCreate;
+	public void setCreateTime(Long createTime) {
+		this.createTime = createTime;
 	}
 
-	public Long getTimeUpdate() {
-		return timeUpdate;
+	public Long getUpdateTime() {
+		return updateTime;
 	}
 
-	public void setTimeUpdate(Long timeUpdate) {
-		this.timeUpdate = timeUpdate;
+	public void setUpdateTime(Long updateTime) {
+		this.updateTime = updateTime;
 	}
 
 	public Test() {}
