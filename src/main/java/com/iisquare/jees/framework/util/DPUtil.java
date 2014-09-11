@@ -342,14 +342,14 @@ public class DPUtil {
 	/**
 	 * 将ArrayList转换为String数组
 	 */
-	public static String[] collectionToStringArray(Collection<String> list) {
+	public static String[] collectionToStringArray(Collection<?> list) {
 		return (String[]) collectionToArray(list);
 	}
 	
 	/**
 	 * 将ArrayList转换为Object数组
 	 */
-	public static Object[] collectionToArray(Collection<String> list) {
+	public static Object[] collectionToArray(Collection<?> list) {
 		if(null == list) {
 			return new Object[]{};
 		}
