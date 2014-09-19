@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.iisquare.jees.core.component.CController;
+import com.iisquare.jees.core.component.CoreController;
 import com.iisquare.jees.demo.domain.Test;
 import com.iisquare.jees.demo.service.TestService;
 import com.iisquare.jees.framework.util.DPUtil;
@@ -19,7 +19,7 @@ import com.iisquare.jees.framework.util.DPUtil;
  */
 @Controller
 @Scope("prototype")
-public class IndexController extends CController {
+public class IndexController extends CoreController {
 	
 	@Autowired
 	public TestService testService;
