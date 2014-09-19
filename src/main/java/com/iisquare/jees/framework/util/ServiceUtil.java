@@ -13,24 +13,19 @@ import com.iisquare.jees.framework.model.DaoBase;
  *
  */
 public class ServiceUtil {
-	
+
 	/**
-	 * 填充状态信息
+	 * 填充属性信息
 	 */
-	public static List<Map<String, Object>> fillStatus(List<Map<String, Object>> list, Object entity) {
-		return fillStatus(list, entity, "status");
-	}
-	
-	/**
-	 * 填充状态信息
-	 */
-	public static List<Map<String, Object>> fillStatus(List<Map<String, Object>> list, Object entity, String field) {
+	public static List<Map<String, Object>> fillPropertyText(List<Map<String, Object>> list, Object entity, String... fields) {
 		for (Map<String, Object> item : list) {
-			String property = DPUtil.upUnderscores(field);
-			ReflectUtil.setPropertyValue(entity, property, null, new Object[]{item.get(field)});
-			String key = DPUtil.stringConcat(field, "_text");
-			Object value = ReflectUtil.getPropertyValue(entity, DPUtil.stringConcat(property, "Text"));
-			item.put(key, value);
+			for (String field : fields) {
+				String property = DPUtil.upUnderscores(field);
+				ReflectUtil.setPropertyValue(entity, property, null, new Object[]{item.get(field)});
+				String key = DPUtil.stringConcat(field, "_text");
+				Object value = ReflectUtil.getPropertyValue(entity, DPUtil.stringConcat(property, "Text"));
+				item.put(key, value);
+			}
 		}
 		return list;
 	}
