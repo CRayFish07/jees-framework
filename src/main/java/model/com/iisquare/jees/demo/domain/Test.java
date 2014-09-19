@@ -58,6 +58,15 @@ public class Test {
 
 	public Test() {}
 
+	public String getStatusText() {
+		switch(this.status) {
+		case -1 : return "已删除";
+		case 0 : return "禁用";
+		case 1 : return "正常";
+		default : return "未知";
+		}
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
