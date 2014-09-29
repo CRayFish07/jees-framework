@@ -100,6 +100,18 @@ public class ValidateUtil {
 		return object;
 	}
 	
+	/**
+	 * 判断字符串是否存在于给定的数组中，若不存在则返回默认值
+	 */
+	public static String filterItem(String object, boolean bTrim, String[] itemArray, String defaultItem) {
+		if(null == object) return defaultItem;
+		if(bTrim) object = DPUtil.trim(object);
+		for (String item : itemArray) {
+			if(DPUtil.equals(object, item)) return item;
+		}
+		return defaultItem;
+	}
+	
 	public static String filterEnglish(String object, boolean bTrim, Integer min, Integer max) {
 		if(null == object) return null;
 		if(bTrim) object = DPUtil.trim(object);
