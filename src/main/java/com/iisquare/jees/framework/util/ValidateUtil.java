@@ -72,24 +72,24 @@ public class ValidateUtil {
 		return null != DPUtil.getFirstMatcher(regexPostCode, object);
 	}
 	
-	public static Integer filterInteger(String object, boolean bZero, Integer min, Integer max) {
+	public static Integer filterInteger(String object, boolean bBound, Integer min, Integer max) {
 		int obj = DPUtil.parseInt(object);
-		if(null != min && obj < min) return bZero ? 0 : null;
-		if(null != max && obj > max) return bZero ? 0 : null;
+		if(null != min && obj < min) return bBound ? min : null;
+		if(null != max && obj > max) return bBound ? max : null;
 		return obj;
 	}
 	
-	public static Double filterDouble(String object, boolean bZero, Double min, Double max) {
+	public static Double filterDouble(String object, boolean bBound, Double min, Double max) {
 		double obj = DPUtil.parseDouble(object);
-		if(null != min && obj < min) return bZero ? 0.0 : null;
-		if(null != max && obj > max) return bZero ? 0.0 : null;
+		if(null != min && obj < min) return bBound ? min : null;
+		if(null != max && obj > max) return bBound ? max : null;
 		return obj;
 	}
 	
-	public static Float filterFloat(String object, boolean bZero, Float min, Float max) {
+	public static Float filterFloat(String object, boolean bBound, Float min, Float max) {
 		float obj = DPUtil.parseFloat(object);
-		if(null != min && obj < min) return bZero ? 0.0f : null;
-		if(null != max && obj > max) return bZero ? 0.0f : null;
+		if(null != min && obj < min) return bBound ? min : null;
+		if(null != max && obj > max) return bBound ? max : null;
 		return obj;
 	}
 	
