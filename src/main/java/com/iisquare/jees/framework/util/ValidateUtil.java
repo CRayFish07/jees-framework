@@ -20,8 +20,8 @@ public class ValidateUtil {
 	public static final String regexIdCard = "^(([1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3})|([1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}([0-9]|[xX]))){1}$";
 	public static final String regexPostCode = "^[1-9]\\d{5}(?!\\d)$";
 	
-	public static boolean isNull(String object) {
-		return null == object || "".endsWith(DPUtil.trim(object));
+	public static boolean isNull(String object, boolean bTrim) {
+		return null == object || "".endsWith(bTrim ? DPUtil.trim(object) : object);
 	}
 	
 	public static boolean isEnglish(String object) {
