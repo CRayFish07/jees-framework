@@ -60,7 +60,7 @@ public class SqlUtil {
 			sb.append(keys[i]);
 			String operator = DPUtil.trim(DPUtil.parseString(operators[i]).toLowerCase());
 			if("in".equals(operator)) {
-				sb.append(operator).append("(");
+				sb.append(" in (");
 				if(bPlaceholder) {
 					sb.append("?");
 				} else {
