@@ -169,7 +169,8 @@ public class DPUtil {
 		Matcher matcher = pattern.matcher(str);
 		while(matcher.find()) {
 			if(bGroup) {
-				for(int i = 0; i < matcher.groupCount(); i++) {
+				int count = matcher.groupCount();
+				for(int i = 0; i < count; i++) {
 					list.add(matcher.group(i));
 				}
 			} else {
