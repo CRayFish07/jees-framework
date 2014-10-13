@@ -103,7 +103,7 @@ public class ValidateUtil {
 	public static String filterRegex(String pattener, String object, boolean bTrim, Integer min, Integer max, String defaultValue) {
 		if(null == object) return defaultValue;
 		if(bTrim) object = DPUtil.trim(object);
-		if(null == DPUtil.getFirstMatcher(pattener, object)) return defaultValue;
+		if(min > 0 && null == DPUtil.getFirstMatcher(pattener, object)) return defaultValue;
 		return filterLength(object, min, max, defaultValue);
 	}
 	
