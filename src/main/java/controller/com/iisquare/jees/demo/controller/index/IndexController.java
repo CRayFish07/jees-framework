@@ -1,6 +1,7 @@
 package com.iisquare.jees.demo.controller.index;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.iisquare.jees.core.component.CoreController;
 import com.iisquare.jees.demo.domain.Test;
 import com.iisquare.jees.demo.service.TestService;
-import com.iisquare.jees.framework.util.DPUtil;
+import com.iisquare.jees.framework.util.ValidateUtil;
 
 /**
  * 示例程序
@@ -90,7 +91,7 @@ public class IndexController extends CoreController {
 	/* 数据库操作示例 - 修改 */
 	public String modelUAction() throws Exception {
 		long time = System.currentTimeMillis();
-		int id = DPUtil.parseInt(get("id"));
+		Integer id = ValidateUtil.filterInteger(get("id"), true, 0, null, null);
 		Test test = testService.getById(id);
 		if(null == test) {
 			return displayMessage(500, "对象不存在");
@@ -105,21 +106,20 @@ public class IndexController extends CoreController {
 	
 	/* 数据库操作示例 - 读取 */
 	public String modelRAction() throws Exception {
-		int page = DPUtil.parseInt(get("page"));
+		int page = ValidateUtil.filterInteger(get("page"), true, 0, null, null);
 		int pageSize = 15;
-		String append = "order by update_time desc";
-		int count = testService.getCount(null, null, append);
-		List<Test> result = testService.getPage(null, null, append, page, pageSize);
+		int count = testService.getCount();
+		List<Map<String, Object>> list = testService.getPage("*", "update_time desc", page, pageSize);
 		assign("page", page);
 		assign("pageSize", pageSize);
 		assign("count", count);
-		assign("result", result);
+		assign("list", list);
 		return displayJSON();
 	}
 	
 	/* 数据库操作示例 - 删除 */
 	public String modelDAction() throws Exception {
-		int id = DPUtil.parseInt(get("id"));
+		Integer id = ValidateUtil.filterInteger(get("id"), true, 0, null, null);
 		int result = testService.deleteByIds(id);
 		assign("deleteId", id);
 		assign("result", result);
