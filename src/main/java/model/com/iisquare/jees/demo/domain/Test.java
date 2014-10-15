@@ -1,18 +1,18 @@
 package com.iisquare.jees.demo.domain;
 
 public class Test {
-	private int id; // 主键
+	private Integer id; // 主键
 	private String title; // 标题
 	private String content; // 内容
-	private int status; // 状态
-	private long createTime; // 添加时间
-	private long updateTime; // 修改时间
+	private Integer status; // 状态
+	private Long createTime; // 添加时间
+	private Long updateTime; // 修改时间
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -32,27 +32,27 @@ public class Test {
 		this.content = content;
 	}
 
-	public int getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
-	public long getCreateTime() {
+	public Long getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(long createTime) {
+	public void setCreateTime(Long createTime) {
 		this.createTime = createTime;
 	}
 
-	public long getUpdateTime() {
+	public Long getUpdateTime() {
 		return updateTime;
 	}
 
-	public void setUpdateTime(long updateTime) {
+	public void setUpdateTime(Long updateTime) {
 		this.updateTime = updateTime;
 	}
 
@@ -62,7 +62,7 @@ public class Test {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -75,7 +75,10 @@ public class Test {
 		if (getClass() != obj.getClass())
 			return false;
 		Test other = (Test) obj;
-		if (id != other.id)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
