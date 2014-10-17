@@ -298,6 +298,7 @@ public class DPUtil {
 	 * 安全方式连接字符串
 	 */
 	public static String safeImplode(String split, Object[] objects) {
+		if(empty(objects)) return "";
 		List<String> list = new ArrayList<String>();
 		for (Object object : objects) {
 			String str = ValidateUtil.filterRegex(regexSafeImplode, DPUtil.parseString(object), true, 1, null, null);
