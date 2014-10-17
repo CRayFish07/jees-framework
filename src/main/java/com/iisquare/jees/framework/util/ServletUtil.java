@@ -29,9 +29,9 @@ public class ServletUtil {
 		for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
 			String key = entry.getKey();
 			if(DPUtil.isItemExist(multipleFields, key)) {
-				map.put(key, DPUtil.parseString(DPUtil.getByIndex(entry.getValue(), 0)));
-			} else {
 				map.put(key, entry.getValue());
+			} else {
+				map.put(key, DPUtil.parseString(DPUtil.getByIndex(entry.getValue(), 0)));
 			}
 		}
 		return map;
