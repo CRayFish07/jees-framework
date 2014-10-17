@@ -119,6 +119,7 @@ public class DPUtil {
 		String str = object.toString();
 		if("".equals(str)) return 0.0;
 		str = getFirstMatcher(regexDouble, str);
+		if(null == str) return 0.0;
 		return Double.parseDouble(str);
 	}
 	
@@ -130,6 +131,7 @@ public class DPUtil {
 		String str = object.toString();
 		if("".equals(str)) return 0.0f;
 		str = getFirstMatcher(regexDouble, str);
+		if(null == str) return 0.0f;
 		return Float.parseFloat(str);
 	}
 	
