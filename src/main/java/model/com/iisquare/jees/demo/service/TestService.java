@@ -30,7 +30,7 @@ public class TestService extends ServiceBase {
 	public TestService() {}
 	
 	public int insert(Test test) {
-		return testDao.insert(test);
+		return testDao.insert(test).intValue();
 	}
 	
 	public int update(Test test) {
@@ -46,7 +46,7 @@ public class TestService extends ServiceBase {
 	}
 	
 	public int getCount() {
-		return testDao.getCount();
+		return testDao.getCount().intValue();
 	}
 	
 	public List<Map<String, Object>> getPage(String columns, String orderBy, int page, int pageSize) {
