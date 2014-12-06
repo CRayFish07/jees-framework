@@ -17,9 +17,15 @@ if(location.endsWith("/")) location = location.substring(0, location.length() - 
 <a href="<%=location%>/mapping" target="_blank">springMVC融合示例</a><br/>
 <a href="<%=location%>/index/index/param" target="_blank">全局参数输出示例</a><br/>
 <a href="<%=location%>/index/index/inject?id=123&title=hello&op=other_param" target="_blank">请求参数获取示例</a><br/>
+<hr/>
 <a href="<%=location%>/index/index/modelC" target="_blank">数据库操作示例 - 添加</a><br/>
 <a href="<%=location%>/index/index/modelU?id=1" target="_blank">数据库操作示例 - 修改</a><br/>
 <a href="<%=location%>/index/index/modelR?page=1" target="_blank">数据库操作示例 - 读取</a><br/>
 <a href="<%=location%>/index/index/modelD?id=1" target="_blank">数据库操作示例 - 删除</a><br/>
+<hr/>
+<a href="<%=location%>/index/bigTest/modelC" target="_blank">BIGINT主键*数据库操作示例 - 添加</a><br/>
+<a href="<%=location%>/index/bigTest/modelU?id=1408186705230" target="_blank">BIGINT主键*数据库操作示例 - 修改</a><br/>
+<a href="<%=location%>/index/bigTest/modelR?page=1" target="_blank">BIGINT主键*数据库操作示例 - 读取</a><br/>
+<a href="<%=location%>/index/bigTest/modelD?id=1408186705230" target="_blank">BIGINT主键*数据库操作示例 - 删除</a><br/>
 </body>
 </html>
