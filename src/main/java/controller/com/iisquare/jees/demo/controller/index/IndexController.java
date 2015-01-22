@@ -94,7 +94,7 @@ public class IndexController extends CoreController {
 		Integer id = ValidateUtil.filterInteger(get("id"), true, 0, null, null);
 		Test test = testService.getById(id);
 		if(null == test) {
-			return displayMessage(500, "对象不存在");
+			return displayMessage(500, "对象不存在", null);
 		}
 		test.setContent("内容" + time);
 		test.setUpdateTime(time);

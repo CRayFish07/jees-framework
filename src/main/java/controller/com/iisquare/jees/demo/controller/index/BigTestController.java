@@ -44,7 +44,7 @@ public class BigTestController extends CoreController {
 		Long id = ValidateUtil.filterLong(get("id"), true, 0L, null, null);
 		BigTest bigBigTest = bigBigTestService.getById(id);
 		if(null == bigBigTest) {
-			return displayMessage(500, "对象不存在");
+			return displayMessage(500, "对象不存在", null);
 		}
 		bigBigTest.setContent("内容" + time);
 		bigBigTest.setUpdateTime(time);
